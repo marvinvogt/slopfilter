@@ -1,6 +1,7 @@
 {
   "name": "slopfilter",
   "image": "mcr.microsoft.com/devcontainers/base:noble",
+  "remoteUser": "vscode",
   "features": {
     "ghcr.io/devcontainers/features/nix:1": {
       "extraNixConfig": "experimental-features = nix-command flakes"
@@ -25,5 +26,5 @@
   "remoteEnv": {
     "PATH": "/home/vscode/.nix-profile/bin:/nix/var/nix/profiles/default/bin:${containerEnv:PATH}"
   },
-  "postCreateCommand": "nix profile add .#rust-toolchain && direnv allow && nix develop --command cargo --version"
+  "postCreateCommand": "nix profile add .#rust-toolchain .#nix-direnv && mkdir -p \"$HOME/.config/direnv\" && printf '%s\\n' 'source \"$HOME/.nix-profile/share/nix-direnv/direnvrc\"' > \"$HOME/.config/direnv/direnvrc\" && direnv allow && nix develop --command cargo --version"
 }
